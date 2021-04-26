@@ -1,0 +1,81 @@
+﻿<Window x:Class="HelloWolrdP2P.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HelloWolrdP2P"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title=".Net Peer2Peer Tester" Height="450" Width="810">
+    <StackPanel>
+        <GroupBox Header="Local DB Actions" Margin="10" Padding="10" Background="Snow">
+            <Canvas Height="31">
+                <StackPanel  Orientation="Horizontal">
+                    <Button Content="Add 1 document" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="36" Width="110" Click="Button_Click_Add_One_Doc"/>
+                    <Button Content="Get all documents" HorizontalAlignment="Left" Margin="102,0,0,0" VerticalAlignment="Top" Height="36" Width="110" Click="Button_Click_Get_All_docs"/>
+                </StackPanel>
+            </Canvas>
+        </GroupBox>
+        <GroupBox Header="Listener Settings" Margin="10" Padding="10" Background="AliceBlue">
+            <Canvas Height="90">
+                <StackPanel Orientation="Horizontal" Margin="10,0,0,0" VerticalAlignment="Top" >
+                    <StackPanel.Resources>
+                        <ObjectDataProvider x:Key="dataFromEnum" MethodName="GetValues"
+                        ObjectType="{x:Type sys:Enum}">
+                            <ObjectDataProvider.MethodParameters>
+                                <x:Type TypeName="local:LISTENER_TLS_MODE"/>
+                            </ObjectDataProvider.MethodParameters>
+                        </ObjectDataProvider>
+                    </StackPanel.Resources>
+                    <Label Content="TLS mode: " HorizontalAlignment="Left"  VerticalAlignment="Top" />
+
+                    <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="244"  Name="combo_TLS_mode" Margin="10,2,10,0"
+                              ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
+                              SelectedIndex="0"
+                              SelectedValuePath="Value" SelectionChanged="TLSMode_Changed">
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Start Listener" HorizontalAlignment="Left" Margin="10,40,0,0"  VerticalAlignment="Top" Height="36" Width="110" Click="Button_Click_Listener" />
+                    <Label Content="Listener port: " HorizontalAlignment="Left" Margin="20,50,0,0" VerticalAlignment="Top"/>
+                    <Label Content="(listener not started)" HorizontalAlignment="Left" Margin="5,50,0,0" VerticalAlignment="Top" Name="listenerPort" FontStyle="Italic"/>
+                </StackPanel>
+                <TextBox Canvas.Left="422" Text="There is no TLS. All communication is plaintext (insecure mode and not recommended in production)" TextWrapping="Wrap" Height="90" Width="326" Background="White" Name="ListenerTLSDesc"/>
+            </Canvas>
+        </GroupBox>
+        <GroupBox Header="Replicator Settings" Margin="10" Padding="10" Background="Cornsilk" Height="148">
+            <Canvas Height="100">
+                <StackPanel HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="10,0,0,0"  Orientation="Horizontal">
+                    <Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,0">Use TLS?</Label>
+                    <RadioButton Checked="radioUseTLSFalseChecked" Name="radioUseTLSFalse" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,6,0,0" IsChecked="True">false</RadioButton>
+                    <RadioButton Checked="radioUseTLSTrueChecked" Name="radioUseTLSTrue"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,6,0,0">true</RadioButton>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel.Resources>
+                        <ObjectDataProvider x:Key="dataFromEnum2" MethodName="GetValues"
+                        ObjectType="{x:Type sys:Enum}">
+                            <ObjectDataProvider.MethodParameters>
+                                <x:Type TypeName="local:LISTENER_CERT_VALIDATION_MODE"/>
+                            </ObjectDataProvider.MethodParameters>
+                        </ObjectDataProvider>
+                    </StackPanel.Resources>
+                    <Label Content="Certificate Validation mode: " HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="10,30,0,0" />
+
+                    <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="250"  Name="combo_Cert_Validation_mode" Margin="20,30,10,0"
+                              IsEnabled="False"
+                              ItemsSource="{Binding Source={StaticResource dataFromEnum2}}"
+                              SelectedIndex="0"
+                              SelectedValuePath="Value" SelectionChanged="CertValidationMode_Changed">
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Listener port to use for replication:" HorizontalAlignment="Left" Margin="10,70,10,10"  VerticalAlignment="Center"/>
+                    <TextBox Text="0" TextWrapping="Wrap" VerticalAlignment="Center" Width="64" Margin="20,70,10,10" TextChanged="TextBox_TextChanged"/>
+                    <Button Content="Start Replicator" HorizontalAlignment="Left" VerticalAlignment="Top" Height="36" Width="110" Click="Button_Click_Replicator" Margin="20,70,10,10"/>
+                </StackPanel>
+                <TextBox Canvas.Left="454" Text="There is no authentication of server cert. The server cert is a self-signed cert. This is typically in used in dev or test environments. Skipping server cert authentication is discouraged in production environments. Communication is encrypted." TextWrapping="Wrap" RenderTransformOrigin="0.041,0.198" Height="105" Width="294" Background="White" Canvas.Top="-9" Name="ListenerValidationDesc" IsEnabled="False"/>
+
+            </Canvas>
+        </GroupBox>
+    </StackPanel>
+</Window>

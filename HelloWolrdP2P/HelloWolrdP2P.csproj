@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="listener-cert-pkey.p12" />
+    <None Remove="listener-pinned-cert.cer" />
+    <None Remove="listener-self-signed-cert.p12" />
+    <None Remove="peerlistener-fleray-test-fr.p12" />
+    <None Remove="pinned-invalid-listener-cert.cer" />
+    <None Remove="pinned-listener-self-signed-cert.cer" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="listener-cert-pkey.p12" />
+    <EmbeddedResource Include="listener-pinned-cert.cer" />
+    <EmbeddedResource Include="listener-self-signed-cert.p12" />
+    <EmbeddedResource Include="peerlistener-fleray-test-fr.p12" />
+    <EmbeddedResource Include="pinned-invalid-listener-cert.cer" />
+    <EmbeddedResource Include="pinned-listener-self-signed-cert.cer" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Couchbase.Lite.Enterprise" Version="2.8.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>
